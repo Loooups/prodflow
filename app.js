@@ -6,9 +6,7 @@ let objetGlobal = {
         {id:1, productionRate:500},   
     ]
 };
-
-// objetGlobal.productionLines
-// objetGlobal["productionLine"]
+let auten = false;
 
 const express = require('express')
 const app = express()
