@@ -12,6 +12,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.use(express.static('public'));
+app.use(express.json());
+app.use(express.text());
+
 app.get('/', (req, res) => {
 
     let data = {
@@ -33,12 +37,16 @@ let newId = objetGlobal.productionLines.length + 1;
     res.send("new-production-line received")
 })
 
-app.post('/production-line/update', (req, res) => {
-    console.log(req);
-        // objetGlobal.productionLines.update({id = req.id, productionRate = req.update});
-    
-    
-        res.send("production-line updated")
+app.post('/production-line/:id/update', (req, res) => {
+    console.log('ID:', req.params.id, typeof(req.params.id));
+    console.log('production-rate:', req.body, typeof(req.body));
+    let reqParaId = Number(req.params.id);
+    const result = objetGlobal.productionLines.filter((productionLines)=>{return objetGlobal.productionLines.id === Number(reqParaId);});
+    // let result = objetGlobal.productionLines.filter(function(productionLines){return productionLines.id === Number(req.params.id);})
+    console.log(result)
+    // objetGlobal.productionLines = {req.params.id, productionRate:req.body},
+    // console.log(objetGlobal);
+    res.send("production-line updated")
     })
 
 app.listen(port, () => {
