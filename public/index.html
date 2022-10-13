@@ -1,20 +1,66 @@
 <!DOCTYPE html>
 <head>
-
+<style>
+table{
+    border-collapse: collapse
+  }
+  
+  td{
+    border: 1px solid black;
+    padding: 10px;
+  }
+  </style>
 </head>
 <body>
 <div>
     <h1>Welcome</h1>
+    <div id="displayDiv"></div>
+    <div id="dataFetching"></div>
 </div> 
 <script>
-    function displayHTML (html, targetElement){
-        document.createElement(targetElement);
-        targetElement.innerHTML = html
-    }
+function displayHTML (html, targetElement){
+    let newElem = document.createElement("p");
+    newElem.innerHTML = html;
+    targetElement.append(newElem);
+    };
     
+let objectTest = {id:"4", prod:"23000"};
+let target = document.getElementById("displayDiv");
+let html = `<ul>
+            <li>Line number:${objectTest.id}</li>
+            <li>Production rate:${objectTest.prod}</li>
+            </ul>`
+
+displayHTML(html,target);
+
+function siteData(data){
+return      `<table>
+            <tr>
+                <td>Production site </td>
+                <td>Address</td>
+                <td>Production rate line 1</td>
+                <td>Production rate line 2</td>
+            </tr>
+            <tr>
+                <td>${data.name}</td>
+                <td>${data.address.address1}</td>
+                <td>${data.productionLines[0].productionRate}</td>
+                <td>${data.productionLines[1].productionRate}</td>
+            </tr>
+            </table>`
+
+
+
+
+
+}
+fetch('/site-info')
+        .then((response) => response.json())
+        .then((data) => {console.log(data);
+            console.log(data.name);
+            document.getElementById('dataFetching').innerHTML = siteData(data);
+        });
+
 </script>   
 </body>
 </html>
-
-
-Créer une fonction displayHTML(html, targetElement) qui ajouter à targetElement un contenu html. Vous utiliserez pour cela createElement et .innerHTML

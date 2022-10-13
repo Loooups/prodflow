@@ -1,12 +1,14 @@
 let objetGlobal = {
-    name:"marcoussy" , 
-    address:{address1:"testAdresse"} , 
+    name:"Polar Production" , 
+    address:{address1:"81, rue de Marie 19 896"} , 
     productionLines: [
-        {id:1, productionRate:1000},
-        {id:2, productionRate:500},
-                
+        {id:0, productionRate:1000},
+        {id:1, productionRate:500},   
     ]
 };
+
+// objetGlobal.productionLines
+// objetGlobal["productionLine"]
 
 const express = require('express')
 const app = express()
@@ -30,7 +32,7 @@ app.get('/site-info', (req, res) => {
 })
 
 app.post('/new-production-line', (req, res) => {
-let newId = objetGlobal.productionLines.length + 1;
+let newId = (objetGlobal.productionLines.length - 1)+1;
     objetGlobal.productionLines.push({id:newId, productionRate:0});
 
 
@@ -41,11 +43,9 @@ app.post('/production-line/:id/update', (req, res) => {
     console.log('ID:', req.params.id, typeof(req.params.id));
     console.log('production-rate:', req.body, typeof(req.body));
     let reqParaId = Number(req.params.id);
-    const result = objetGlobal.productionLines.filter((productionLines)=>{return objetGlobal.productionLines.id === Number(reqParaId);});
-    // let result = objetGlobal.productionLines.filter(function(productionLines){return productionLines.id === Number(req.params.id);})
-    console.log(result)
-    // objetGlobal.productionLines = {req.params.id, productionRate:req.body},
-    // console.log(objetGlobal);
+    console.log(reqParaId);
+    let result = objetGlobal.productionLines[reqParaId].productionRate=req.body.productionRate;
+    console.log(result);
     res.send("production-line updated")
     })
 
