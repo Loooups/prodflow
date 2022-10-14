@@ -17,6 +17,9 @@ table{
     border: 3px solid #fff;
     border-radius: 50%;
   }
+  div{
+    margin: 20px;
+  }
   </style>
 </head>
 <body>
@@ -24,6 +27,7 @@ table{
     <h1>Welcome to PRODFLOW</h1>
     <div id="displayDiv"></div>
     <div id="dataFetching"></div>
+    <div id="dataFetchingFromDB"></div>
 </div> 
 <script>
 function displayHTML (html, targetElement){
@@ -57,11 +61,8 @@ return      `<table>
             </tr>
             </table>`
 
-
-
-
-
 }
+
 fetch('/site-info')
         .then((response) => response.json())
         .then((data) => {console.log(data);
@@ -69,6 +70,27 @@ fetch('/site-info')
             document.getElementById('dataFetching').innerHTML = siteData(data);
         });
 
+fetch('/test_DB')
+        .then((response) => response.json())
+        .then((data) => {console.log(data);
+            console.log(data.Name);
+            document.getElementById('dataFetchingFromDB').innerHTML = siteData2(data);
+        });
+
+
+
+function siteData2(data){
+return      `<table>
+            <tr>
+                <td>Site ID </td>
+                <td>Site Name</td>
+            </tr>
+            <tr>
+                <td>${data[0].Id_site}</td>
+                <td>${data[0].Name}</td>
+            </tr>
+            </table>`
+          }
 </script>   
 </body>
 </html>

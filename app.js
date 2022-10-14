@@ -6,9 +6,8 @@ let objetGlobal = {
         {id:1, productionRate:500},   
     ]
 };
-let auten = false;
-
-const express = require('express')
+const express = require('express');
+const mysql = require("mysql2");
 const app = express()
 const port = 3000
 
@@ -52,3 +51,21 @@ app.listen(port, () => {
 })
 
 
+
+app.get('/test_DB', (req, res) => {
+
+    connection2.query("SELECT * FROM Site",(err,data)=>{
+        res.json(data);
+    });   
+})
+
+function getConnection() {
+    let dbConfig2 = {
+        user: "root",
+        password: "password",
+        database: "PRODFLOW"
+    }
+    return mysql.createConnection(dbConfig2);
+}
+
+let connection2 = getConnection();
